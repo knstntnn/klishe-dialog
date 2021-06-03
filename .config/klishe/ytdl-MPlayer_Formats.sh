@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# knn_knstntnn 210603
+# knn_knstntnn 210603 # thanks to krasnyh
 # выбор ytdl-фоматов с последующим воспроизведением в MPlayer. 
 # dialog/Xdialog-скрипт-для-"вхождения" ( пр.: под скрипт 'klishe.sh' [один из примеров "юзер-скриптов для klishe"])
 
@@ -46,20 +46,29 @@ esac
 rm /tmp/Ffile  
 
 
-$DIALOG  --title "инфо2" --infobox "подгужается ...\n ждите 'ok-окно' "  7 50 &
+$DIALOG  --title "инфо2" --infobox "подгужается ...\n ждите 'ok-окно' "  15 50 &
 
-youtube-dl -o -  "$@"  | mplayer -fs -zoom  -cache 10000 -
 
+mplay ()
+{
+ ffmpeg -i "$(youtube-dl -g -f $1 $url)" -i "$(youtube-dl -g -f $2 $url)" -c copy -f $3 - | mplayer -fs -zoom  -cache 10000  -
+}
+echo "$fInput"
+echo $url
+
+
+mplay $fInput
 
 # обработка ошибок 
-errCode=$(echo "$?")
+# errCode=$(echo "$?")
 
 
-if [ "$errCode" -ne "0" ]
-  then
-    $DIALOG   --title "код выхода"   --msgbox " !!! ошибка !!! \n ( код = $errCode ) \n $(cat /tmp/stdoutFile)  "  12 100 
+# if [ "$errCode" -ne "0" ]
+#   then
+#     $DIALOG   --title "код выхода"   --msgbox " !!! ошибка !!! \n ( код = $errCode ) \n $(cat /tmp/stdoutFile)  "  12 100 
 
-fi
+# fi
 
 rm /tmp/stderrFile
+
 
