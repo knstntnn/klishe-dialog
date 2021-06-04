@@ -15,8 +15,10 @@ url="$@"
 
 $DIALOG    --title "инфо1"   --infobox " обработка... ждите 'окно-списка' " 7  50  &
 
+[ -f "/tmp/Ffile" ] && rm /tmp/Ffile
+
 ## grep ',' - отсечка строк "без форматов".
-  youtube-dl -F "$url" | grep ',' > /tmp/Ffile
+while [ ! -f "/tmp/Ffile" ] ; do    ( youtube-dl -F "$url" | grep ',' > /tmp/Ffile )  ; done  |  $DIALOG    --title "инфо1"   --gauge " обработка... ждите 'окно-списка' " 7  50 0
 
 $DIALOG  --title "выбери число(-а) из левой колонки" --textbox  /tmp/Ffile 28 100 
 
