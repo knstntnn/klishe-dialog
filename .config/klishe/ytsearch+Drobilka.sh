@@ -1,7 +1,7 @@
 #!/bin/sh
 ##   knn_knstntnn 
 ##  
-## поиск по ютубу ч/з "ytdl-ytsearch" ; 
+## поиск по ютубу ч/з "ytdl-ytsearch" с переводом результатов в *.m3u
 ## 
 
 q=$(echo "${@}")
