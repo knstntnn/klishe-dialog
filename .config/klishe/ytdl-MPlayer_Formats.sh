@@ -48,12 +48,12 @@ esac
 rm /tmp/Ffile  
 
 
-$DIALOG  --title "инфо2" --infobox "подгужается ...\n ждите 'ok-окно' "  15 50 &
+$DIALOG  --title "инфо2" --infobox "подгружается MPlayer...\n ждите 'ok-окно' "  15 50 &
 
 
 mplay ()
 {
- ffmpeg -i "$(youtube-dl -g -f $1 $url)" -i "$(youtube-dl -g -f $2 $url)" -c copy -f $3 - | mplayer -fs -zoom  -cache 10000  -
+ ffmpeg -i "$(youtube-dl -g -f $1 $url)" -i "$(youtube-dl -g -f $2 $url)" -c copy -f "$3" - | mplayer -fs -zoom  -cache 10000  -
 }
 echo "$fInput"
 echo $url
