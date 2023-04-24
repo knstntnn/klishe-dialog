@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # knn_knstntnn 210127
+# --230424 edit
 # выбор ytdl-фоматов с последующим скачиванием 
 # dialog/Xdialog-скрипт-для-"вхождения" ( пр.: под скрипт 'klishe.sh' [один из примеров "юзер-скриптов для klishe"])
 
@@ -52,6 +53,17 @@ esac
 rm /tmp/Ffile  
 
 
+# fileName-mod:
+
+EXT="${fileName##*.}" 
+
+fileName=$(youtube-dl --print filename -f "${fInput}" "${url}") 
+
+fileNameOut=$(echo "${fileName%.*}"_"$fInput""${EXT}" | tr ' ' '_') ; echo "$fileNameOut"
+
+####
+
+
 $DIALOG  --title "инфо2" --infobox "скачивается ...\n ждите 'ok-окно' "  7 50 &
 
 youtube-dl -f "$fInput" "$url" 2> /tmp/stderrFile 
@@ -65,7 +77,7 @@ if [ "$errCode" -ne "0" ]
     $DIALOG   --title "ошибка"   --msgbox " !!! ошибка !!! \n ( код = $errCode ) \n $(cat /tmp/stdoutFile)  "  12 100 
   else
 # ok --msgbox
-    $DIALOG  --title "f=$fInput для $url"   --msgbox "ok \n скачалось )\n \" (в \"\$HOME\" )" 12 100
+    $DIALOG  --title "f=$fInput для $url"   --msgbox "ok \n скачалось )\n \" (в \"\$HOME\"\n \" (в \"\$HOME\"\n"$fileNameOut" )" 12 100
 fi
 
 rm /tmp/stderrFile
